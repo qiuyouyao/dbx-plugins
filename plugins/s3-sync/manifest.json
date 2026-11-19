@@ -105,6 +105,37 @@
       "label": "S3 Sync",
       "description": "Migrate objects between S3-compatible storage services with preview, incremental sync and failure retry.",
       "icon": "assets/plugin.svg"
+    },
+    {
+      "type": "command",
+      "id": "io.github.example.s3-sync.open",
+      "label": "Open S3 Sync",
+      "description": "Open the S3 Sync workbench.",
+      "icon": "assets/plugin.svg",
+      "action": {
+        "type": "open-workbench",
+        "workbench": "io.github.example.s3-sync.workbench",
+        "presentation": "tab"
+      }
+    },
+    {
+      "type": "menus",
+      "id": "io.github.example.s3-sync.menus",
+      "items": [
+        {
+          "location": "appToolbar",
+          "command": "io.github.example.s3-sync.open",
+          "group": "primary",
+          "order": 10,
+          "default_visible": true
+        },
+        {
+          "location": "commandPalette",
+          "command": "io.github.example.s3-sync.open",
+          "group": "primary",
+          "order": 10
+        }
+      ]
     }
   ],
   "localizations": {
@@ -140,6 +171,10 @@
         "io.github.example.s3-sync.workbench": {
           "label": "S3 同步",
           "description": "在 S3 兼容存储之间迁移对象，支持预览、增量同步与失败重试。"
+        },
+        "io.github.example.s3-sync.open": {
+          "label": "打开 S3 同步",
+          "description": "打开 S3 同步工作台。"
         }
       }
     }
