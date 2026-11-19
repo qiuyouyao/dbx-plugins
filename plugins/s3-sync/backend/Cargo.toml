@@ -1,0 +1,33 @@
+[package]
+name = "dbx-plugin-s3-sync"
+version = "0.1.0"
+edition = "2021"
+license = "Apache-2.0"
+
+[workspace]
+
+[dependencies]
+dbx-plugin-sdk = { version = "0.1.0" }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "fs", "io-util", "sync", "time"] }
+reqwest = { version = "0.12", default-features = false, features = ["native-tls", "stream"] }
+aws-sigv4 = "1"
+aws-credential-types = "1.3"
+aws-smithy-runtime-api = { version = "1.22", features = ["client"] }
+http = "1"
+roxmltree = "0.20"
+chrono = { version = "0.4", default-features = false, features = ["std", "serde", "clock"] }
+uuid = { version = "1", features = ["v4"] }
+futures-util = "0.3"
+percent-encoding = "2"
+sha2 = "0.10"
+hex = "0.4"
+
+# Keep plugin binaries close to the host app's size: default release settings
+# leave ~20MB of symbols and unoptimized generic code in an OpenDAL-sized backend.
+# panic stays "unwind" so the sidecar protocol can report panics as errors.
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1

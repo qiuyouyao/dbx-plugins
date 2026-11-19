@@ -1,0 +1,17 @@
+# DBX 插件开发数据（可能含明文凭据，官方要求必须忽略）
+.dbx-dev/
+
+# 构建输出
+dist/
+node_modules/
+target/
+plugins/*/ui/
+
+# 运行时数据与临时实验目录
+.s3-sync-data/
+.scratch-svelte/
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+*.log

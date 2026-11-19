@@ -1,0 +1,15 @@
+schema_version = 1
+
+[backend]
+language = "rust"
+directory = "backend"
+binary = "dbx-plugin-s3-sync"
+
+[package]
+include = ["assets", "ui"]
+
+[dev]
+# Windows dev-host workaround: it spawns build commands with a \\?\ verbatim
+# cwd that cmd.exe rejects. pwsh tolerates it; strip the prefix before npm.
+ui_build = ["pwsh", "-NoProfile", "-Command", '$p = (Get-Location).ProviderPath -replace "^\\\\\?\\", ""; Set-Location $p; npm run build']
+ui_watch = ["pwsh", "-NoProfile", "-Command", '$p = (Get-Location).ProviderPath -replace "^\\\\\?\\", ""; Set-Location $p; npm run build:watch']

@@ -1,0 +1,147 @@
+{
+  "$schema": "https://raw.githubusercontent.com/t8y2/dbx/main/plugins/manifest.schema.json",
+  "manifest_version": 1,
+  "id": "io.github.example.s3-sync",
+  "name": "S3 Sync",
+  "version": "0.1.0",
+  "publisher": "example",
+  "description": "Migrate and incrementally sync objects between S3-compatible storage services (MinIO, RustFS, AWS S3).",
+  "icon": "assets/plugin.svg",
+  "permissions": [
+    "host.workbench",
+    "host.events",
+    "host.storage",
+    "host.connections:read"
+  ],
+  "engines": {
+    "dbx": ">=0.5.68",
+    "host_api": "1"
+  },
+  "entrypoints": {
+    "backend": {
+      "protocol_versions": [1],
+      "transport": "stdio-jsonl",
+      "executable": "bin/dbx-plugin-s3-sync"
+    },
+    "ui": {
+      "root": "ui",
+      "entry": "ui/index.html"
+    }
+  },
+  "contributions": [
+    {
+      "type": "connection-provider",
+      "id": "io.github.example.s3-sync.connection",
+      "label": "S3-compatible storage",
+      "icon": "assets/plugin.svg",
+      "database_type": "s3-sync",
+      "description": "Connect to an S3-compatible object storage service such as MinIO, RustFS or AWS S3.",
+      "fields": [
+        {
+          "key": "display_name",
+          "label": "Connection name",
+          "type": "text",
+          "default": "S3 storage",
+          "binding": "name",
+          "required": true
+        },
+        {
+          "key": "endpoint",
+          "label": "Endpoint URL",
+          "type": "text",
+          "placeholder": "http://127.0.0.1:9000",
+          "description": "Service URL including scheme and port, e.g. http://minio.internal:9000 or https://s3.amazonaws.com.",
+          "binding": "config",
+          "required": true
+        },
+        {
+          "key": "access_key",
+          "label": "Access key",
+          "type": "text",
+          "binding": "config",
+          "required": true
+        },
+        {
+          "key": "secret_key",
+          "label": "Secret key",
+          "type": "password",
+          "binding": "secret",
+          "required": true
+        },
+        {
+          "key": "region",
+          "label": "Region",
+          "type": "text",
+          "default": "us-east-1",
+          "description": "MinIO and RustFS usually accept us-east-1.",
+          "binding": "config"
+        },
+        {
+          "key": "addressing_style",
+          "label": "Addressing style",
+          "type": "select",
+          "options": [
+            { "label": "Path style (MinIO / RustFS)", "value": "path" },
+            { "label": "Virtual-host style (AWS S3)", "value": "virtual" }
+          ],
+          "default": "path",
+          "binding": "config"
+        },
+        {
+          "key": "insecure_tls",
+          "label": "Allow self-signed certificates",
+          "type": "boolean",
+          "default": false,
+          "description": "Skip TLS certificate verification. Only enable for trusted internal endpoints.",
+          "binding": "config"
+        }
+      ],
+      "workbench": "io.github.example.s3-sync.workbench",
+      "capabilities": ["test", "connect", "disconnect"]
+    },
+    {
+      "type": "workbench",
+      "id": "io.github.example.s3-sync.workbench",
+      "label": "S3 Sync",
+      "description": "Migrate objects between S3-compatible storage services with preview, incremental sync and failure retry.",
+      "icon": "assets/plugin.svg"
+    }
+  ],
+  "localizations": {
+    "zh-CN": {
+      "name": "S3 同步",
+      "description": "在 S3 兼容存储（MinIO、RustFS、AWS S3）之间迁移对象，支持预览、增量同步与失败重试。",
+      "contributions": {
+        "io.github.example.s3-sync.connection": {
+          "label": "S3 兼容存储",
+          "description": "连接 MinIO、RustFS、AWS S3 等 S3 兼容对象存储服务。",
+          "fields": {
+            "display_name": { "label": "连接名称" },
+            "endpoint": {
+              "label": "端点 URL",
+              "description": "含协议与端口的服务地址，例如 http://minio.internal:9000 或 https://s3.amazonaws.com。"
+            },
+            "access_key": { "label": "Access Key" },
+            "secret_key": { "label": "Secret Key" },
+            "region": { "label": "区域", "description": "MinIO 与 RustFS 通常使用 us-east-1。" },
+            "addressing_style": {
+              "label": "寻址风格",
+              "options": {
+                "path": "路径风格（MinIO / RustFS）",
+                "virtual": "虚拟主机风格（AWS S3）"
+              }
+            },
+            "insecure_tls": {
+              "label": "允许自签名证书",
+              "description": "跳过 TLS 证书校验，仅对可信的内网端点开启。"
+            }
+          }
+        },
+        "io.github.example.s3-sync.workbench": {
+          "label": "S3 同步",
+          "description": "在 S3 兼容存储之间迁移对象，支持预览、增量同步与失败重试。"
+        }
+      }
+    }
+  }
+}
