@@ -13,7 +13,7 @@ and `docs/adr/`.
 ## Develop
 
 ```pwsh
-npm install
+npm ci
 npm run build            # or build:watch
 dbx-plugin dev --port 5190
 ```
@@ -50,8 +50,32 @@ Without the env vars the integration test skips itself.
 ## Package
 
 ```pwsh
+npm ci
+npm run build
 dbx-plugin package .
 ```
 
 Unsigned candidate `.dbxp` lands in `dist/`. Installing it locally requires
 “allow unsigned development packages” in the DBX plugin center.
+
+The CI workflow lives at the repository root. It builds every DBX target and
+uploads the unsigned `.dbxp` files plus `release-candidates.json` to the GitHub
+Release matching the tag.
+
+## DBX Store submission
+
+1. Publish a source tag `v0.1.0` and a GitHub Release for it.
+2. Wait for `.github/workflows/plugin-release.yml` to upload all candidates.
+3. Download `release-candidates.json` from that Release, then generate the store candidate:
+
+```pwsh
+npm run store:candidate -- ./release-candidates.json
+```
+
+4. Open a PR against `t8y2/dbx-store` `main` containing:
+   - `publishers/qiuyouyao.json` from `store/publishers/qiuyouyao.json`
+   - `candidates/io.github.qiuyouyao.s3-sync.json` from `dist/store-candidate.json`
+
+Do not commit `dist/`, `.dbxp` files, signing keys, or tokens. DBX Store signs
+approved candidates; plugin authors must not run `dbx-plugin keygen` for the
+official store.

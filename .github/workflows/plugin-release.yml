@@ -9,12 +9,13 @@ permissions:
 
 jobs:
   release:
-    uses: t8y2/dbx/.github/workflows/plugin-release-reusable.yml@plugin-cli-v0.1.10
+    uses: t8y2/dbx/.github/workflows/plugin-release-reusable.yml@67f058dd5521619c8012a594fa2e3496dde4c3ca
     with:
       release-tag: ${{ github.event.release.tag_name }}
-      package-command: dbx-plugin package .
+      working-directory: plugins/s3-sync
+      package-command: npm ci && npm run build && dbx-plugin package .
       package-path: dist/*.dbxp
       metadata-path: dist/*.artifact.json
       plugin-cli-version: 0.1.10
       go-version: ""
-      rust-toolchain: "stable"
+      rust-toolchain: stable

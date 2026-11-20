@@ -1,10 +1,10 @@
 {
   "$schema": "https://raw.githubusercontent.com/t8y2/dbx/main/plugins/manifest.schema.json",
   "manifest_version": 1,
-  "id": "io.github.example.s3-sync",
+  "id": "io.github.qiuyouyao.s3-sync",
   "name": "S3 Sync",
   "version": "0.1.0",
-  "publisher": "example",
+  "publisher": "qiuyouyao",
   "description": "Migrate and incrementally sync objects between S3-compatible storage services (MinIO, RustFS, AWS S3).",
   "icon": "assets/plugin.svg",
   "permissions": [
@@ -31,7 +31,7 @@
   "contributions": [
     {
       "type": "connection-provider",
-      "id": "io.github.example.s3-sync.connection",
+      "id": "io.github.qiuyouyao.s3-sync.connection",
       "label": "S3-compatible storage",
       "icon": "assets/plugin.svg",
       "database_type": "s3-sync",
@@ -58,7 +58,7 @@
           "key": "access_key",
           "label": "Access key",
           "type": "text",
-          "binding": "config",
+          "binding": "secret",
           "required": true
         },
         {
@@ -96,42 +96,42 @@
           "binding": "config"
         }
       ],
-      "workbench": "io.github.example.s3-sync.workbench",
+      "workbench": "io.github.qiuyouyao.s3-sync.workbench",
       "capabilities": ["test", "connect", "disconnect"]
     },
     {
       "type": "workbench",
-      "id": "io.github.example.s3-sync.workbench",
+      "id": "io.github.qiuyouyao.s3-sync.workbench",
       "label": "S3 Sync",
       "description": "Migrate objects between S3-compatible storage services with preview, incremental sync and failure retry.",
       "icon": "assets/plugin.svg"
     },
     {
       "type": "command",
-      "id": "io.github.example.s3-sync.open",
+      "id": "io.github.qiuyouyao.s3-sync.open",
       "label": "Open S3 Sync",
       "description": "Open the S3 Sync workbench.",
       "icon": "assets/plugin.svg",
       "action": {
         "type": "open-workbench",
-        "workbench": "io.github.example.s3-sync.workbench",
+        "workbench": "io.github.qiuyouyao.s3-sync.workbench",
         "presentation": "tab"
       }
     },
     {
       "type": "menus",
-      "id": "io.github.example.s3-sync.menus",
+      "id": "io.github.qiuyouyao.s3-sync.menus",
       "items": [
         {
           "location": "appToolbar",
-          "command": "io.github.example.s3-sync.open",
+          "command": "io.github.qiuyouyao.s3-sync.open",
           "group": "primary",
           "order": 10,
           "default_visible": true
         },
         {
           "location": "commandPalette",
-          "command": "io.github.example.s3-sync.open",
+          "command": "io.github.qiuyouyao.s3-sync.open",
           "group": "primary",
           "order": 10
         }
@@ -143,7 +143,7 @@
       "name": "S3 同步",
       "description": "在 S3 兼容存储（MinIO、RustFS、AWS S3）之间迁移对象，支持预览、增量同步与失败重试。",
       "contributions": {
-        "io.github.example.s3-sync.connection": {
+        "io.github.qiuyouyao.s3-sync.connection": {
           "label": "S3 兼容存储",
           "description": "连接 MinIO、RustFS、AWS S3 等 S3 兼容对象存储服务。",
           "fields": {
@@ -168,11 +168,11 @@
             }
           }
         },
-        "io.github.example.s3-sync.workbench": {
+        "io.github.qiuyouyao.s3-sync.workbench": {
           "label": "S3 同步",
           "description": "在 S3 兼容存储之间迁移对象，支持预览、增量同步与失败重试。"
         },
-        "io.github.example.s3-sync.open": {
+        "io.github.qiuyouyao.s3-sync.open": {
           "label": "打开 S3 同步",
           "description": "打开 S3 同步工作台。"
         }

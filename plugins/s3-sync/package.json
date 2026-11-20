@@ -1,10 +1,11 @@
 {
-  "name": "io.github.example.s3-sync-ui",
+  "name": "io.github.qiuyouyao.s3-sync-ui",
   "private": true,
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "build:watch": "vite build --watch"
+    "build:watch": "vite build --watch",
+    "store:candidate": "node scripts/build-store-candidate.mjs"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.2.1",

@@ -69,15 +69,6 @@
     testing[side] = true;
     testResult[side] = null;
     try {
-      const conn = app.connections.find((c) => c.id === connectionId);
-      if (conn && !conn.connected && typeof window.dbxPlugin.reopenConnection === "function") {
-        try {
-          await window.dbxPlugin.reopenConnection(connectionId);
-          await loadConnections();
-        } catch {
-          // host refused or API unavailable; the probe below reports it
-        }
-      }
       const result = await rpc("s3/listBuckets", { connectionId });
       testResult[side] = { ok: true, text: t("testOk").replace("{count}", result.buckets.length) };
       loadBuckets(side, connectionId);

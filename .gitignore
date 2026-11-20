@@ -11,6 +11,17 @@ plugins/*/ui/
 .s3-sync-data/
 .scratch-svelte/
 
+# 密钥与环境文件
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# 发布候选包（应只存在于 GitHub Release / 对象存储）
+*.dbxp
+
 # 系统与编辑器
 .DS_Store
 Thumbs.db

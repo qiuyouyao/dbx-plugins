@@ -68,7 +68,7 @@ export async function loadConnections() {
     try {
       const all = (await window.dbxPlugin.getConnections()) || [];
       for (const c of all) {
-        if (c.dbType !== "s3-sync" && c.providerId !== "io.github.example.s3-sync.connection") continue;
+        if (c.dbType !== "s3-sync" && c.providerId !== "io.github.qiuyouyao.s3-sync.connection") continue;
         if (!merged.has(c.id)) merged.set(c.id, { id: c.id, name: c.name, connected: !!(c.connected || c.isConnected) });
       }
     } catch {

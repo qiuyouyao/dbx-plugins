@@ -314,9 +314,10 @@ fn s3_config(connection: &Value) -> Result<S3Config, PluginError> {
     let config = connection.get("external_config").cloned().unwrap_or_default();
     let secrets = connection.get("connection_secrets").cloned().unwrap_or_default();
     let field = |key: &str| config.get(key).and_then(Value::as_str).unwrap_or("").trim().to_string();
+    let secret_field = |key: &str| secrets.get(key).and_then(Value::as_str).unwrap_or("").trim().to_string();
     let endpoint = field("endpoint");
-    let access_key = field("access_key");
-    let secret_key = secrets.get("secret_key").and_then(Value::as_str).unwrap_or("").to_string();
+    let access_key = secret_field("access_key");
+    let secret_key = secret_field("secret_key");
     if endpoint.is_empty() || access_key.is_empty() || secret_key.is_empty() {
         return Err(PluginError::new(-32602, "Endpoint, access key and secret key are required"));
     }
@@ -358,7 +359,7 @@ fn event_sink(emitter: &PluginEmitter) -> engine::EventSink {
 
 fn main() -> std::io::Result<()> {
     let plugin = Plugin::new().map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e.message))?;
-    let metadata = PluginMetadata::new("io.github.example.s3-sync", env!("CARGO_PKG_VERSION"))
+    let metadata = PluginMetadata::new("io.github.qiuyouyao.s3-sync", env!("CARGO_PKG_VERSION"))
         .with_capability("connections")
         .with_capability("events");
     PluginServer::new(metadata, plugin).serve()
