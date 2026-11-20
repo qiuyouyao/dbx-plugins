@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   release:
-    uses: t8y2/dbx/.github/workflows/plugin-release-reusable.yml@67f058dd5521619c8012a594fa2e3496dde4c3ca
+    uses: t8y2/dbx/.github/workflows/plugin-release-reusable.yml@plugin-cli-v0.1.10
     with:
       release-tag: ${{ github.event.release.tag_name }}
       working-directory: plugins/s3-sync
