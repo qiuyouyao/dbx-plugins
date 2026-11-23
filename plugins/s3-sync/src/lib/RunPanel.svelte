@@ -1,10 +1,10 @@
 <script>
   import { app, showError } from "./state.svelte.js";
   import { rpc, formatBytes, settingsToWire } from "./api.js";
-  import { makeI18n } from "./i18n.js";
+  import { localizeError, makeI18n } from "./i18n.js";
 
   let { onback } = $props();
-  const t = makeI18n(app.locale);
+  const t = $derived(makeI18n(app.locale));
   const run = $derived(app.run);
   const finished = $derived(run && run.status !== "running");
   const processed = $derived(run ? run.doneCount + run.failedCount : 0);
@@ -61,7 +61,7 @@
               {#each run.failures as failure (failure.sourceKey)}
                 <tr>
                   <td class="mono">{failure.sourceKey}</td>
-                  <td class="mono">{failure.error}</td>
+                  <td class="mono">{localizeError(t, failure.error)}</td>
                 </tr>
               {/each}
             </tbody>

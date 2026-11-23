@@ -31,6 +31,7 @@ const dictionaries = {
     selectConnection: "Select a connection…",
     selectBucket: "Select a bucket…",
     loadBucketsFailed: "Cannot list buckets. Open the connection in DBX first.",
+    connectionNotOpen: "Open the saved S3 connection in DBX first, then try again.",
     noConnections: "No S3 connections found. Add an “S3-compatible storage” connection in DBX first.",
     openConnectionHint: "Connections marked ● are open; others must be opened in DBX before use.",
     sameEndpointWarning: "Source and target point to the same bucket and prefix.",
@@ -83,6 +84,15 @@ const dictionaries = {
     reason: "Reason",
     key: "Key",
     size: "Size",
+    previewExpired: "The preview expired. Run preview again.",
+    runNotActive: "The run is no longer active or no longer exists.",
+    nothingToRetry: "There are no failed objects to retry.",
+    invalidRequest: "The request is missing or has invalid parameters.",
+    internalError: "Internal plugin error.",
+    cancelledError: "Cancelled.",
+    transportError: "Network or transport error.",
+    objectMissing: "The source object no longer exists.",
+    accessDenied: "Access denied. Check the connection credentials and permissions.",
   },
   zh: {
     appTitle: "S3 同步",
@@ -115,6 +125,7 @@ const dictionaries = {
     selectConnection: "选择连接…",
     selectBucket: "选择桶…",
     loadBucketsFailed: "无法列出桶。请先在 DBX 中打开该连接。",
+    connectionNotOpen: "请先在 DBX 中打开已保存的 S3 连接，然后重试。",
     noConnections: "未找到 S3 连接。请先在 DBX 中新建「S3 兼容存储」连接。",
     openConnectionHint: "标 ● 的连接已打开；其余连接需先在 DBX 中打开才能使用。",
     sameEndpointWarning: "源与目标指向同一个桶和前缀。",
@@ -167,10 +178,36 @@ const dictionaries = {
     reason: "原因",
     key: "键",
     size: "大小",
+    previewExpired: "预览已过期，请重新预览。",
+    runNotActive: "该执行已结束或不存在。",
+    nothingToRetry: "没有可重试的失败对象。",
+    invalidRequest: "请求参数缺失或无效。",
+    internalError: "插件内部错误。",
+    cancelledError: "已取消。",
+    transportError: "网络或传输错误。",
+    objectMissing: "源对象已不存在。",
+    accessDenied: "访问被拒绝，请检查连接凭据与权限。",
   },
 };
 
 export function makeI18n(locale) {
   const dict = String(locale || "en").toLowerCase().startsWith("zh") ? dictionaries.zh : dictionaries.en;
   return (key) => dict[key] ?? dictionaries.en[key] ?? key;
+}
+
+export function localizeError(t, error) {
+  const code = Number(error?.code);
+  const message = typeof error === "string" ? error : (error?.message ?? String(error ?? ""));
+  if (code === -32010 || /^Open the saved S3 connection/i.test(message)) return t("connectionNotOpen");
+  if (code === -32011) return t("previewExpired");
+  if (code === -32012) return t("runNotActive");
+  if (code === -32013) return t("nothingToRetry");
+  if (code === -32602) return t("invalidRequest");
+  if (/^(Cancelled|Transport: Cancelled)$/i.test(message)) return t("cancelledError");
+  if (/^Transport: Source object vanished/i.test(message)) return t("objectMissing");
+  if (/^NoSuchKey:/i.test(message)) return t("objectMissing");
+  if (/^AccessDenied:/i.test(message)) return t("accessDenied");
+  if (code === -32000 && /Session registry is poisoned|Cannot start async runtime/i.test(message)) return t("internalError");
+  if (/^Transport:/i.test(message)) return t("transportError");
+  return message;
 }

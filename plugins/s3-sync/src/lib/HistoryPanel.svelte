@@ -1,10 +1,10 @@
 <script>
   import { app, showError } from "./state.svelte.js";
   import { rpc, formatBytes, formatTime, taskSummary } from "./api.js";
-  import { makeI18n } from "./i18n.js";
+  import { localizeError, makeI18n } from "./i18n.js";
 
   let { onback, onretry } = $props();
-  const t = makeI18n(app.locale);
+  const t = $derived(makeI18n(app.locale));
 
   async function openDetail(runId) {
     try {
@@ -44,7 +44,7 @@
       </div>
       <p>
         <span class="badge {detail.status}">{t(detail.status)}</span>
-        · {t("startedAt")}: {formatTime(detail.startedAt)} · {t("finishedAt")}: {formatTime(detail.finishedAt)}
+        · {t("startedAt")}: {formatTime(detail.startedAt, app.locale)} · {t("finishedAt")}: {formatTime(detail.finishedAt, app.locale)}
         {#if detail.retryOf}· {t("retryOf")}: <span class="mono">{detail.retryOf}</span>{/if}
       </p>
       <p class="muted">
@@ -60,7 +60,7 @@
               {#each detail.failures as failure (failure.sourceKey)}
                 <tr>
                   <td class="mono">{failure.sourceKey}</td>
-                  <td class="mono">{failure.error}</td>
+                  <td class="mono">{localizeError(t, failure.error)}</td>
                 </tr>
               {/each}
             </tbody>
@@ -81,7 +81,7 @@
       <tbody>
         {#each app.history as record (record.runId)}
           <tr>
-            <td>{formatTime(record.startedAt)}</td>
+            <td>{formatTime(record.startedAt, app.locale)}</td>
             <td class="mono">{record.task.name || taskSummary(record.task)}</td>
             <td><span class="badge {record.status}">{t(record.status)}</span></td>
             <td>{record.doneCount} / {record.totalCount}</td>

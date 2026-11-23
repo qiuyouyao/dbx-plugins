@@ -4,8 +4,9 @@
   import { makeI18n } from "./i18n.js";
 
   let { onback, onstarted } = $props();
-  const t = makeI18n(app.locale);
+  const t = $derived(makeI18n(app.locale));
   const summary = $derived(app.preview?.summary);
+  const reasonKeys = { new: "newCount", changed: "changedCount", unverified: "unverifiedCount" };
 
   async function start() {
     app.busy = true;
@@ -47,7 +48,7 @@
               <tr>
                 <td class="mono">{item.sourceKey}</td>
                 <td>{formatBytes(item.size)}</td>
-                <td><span class="badge">{item.reason}</span></td>
+                <td><span class="badge">{t(reasonKeys[item.reason] ?? item.reason)}</span></td>
               </tr>
             {/each}
           </tbody>

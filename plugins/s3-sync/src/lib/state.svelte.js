@@ -1,6 +1,7 @@
 // Shared reactive state (Svelte 5 runes). Task definitions and settings are
 // persisted through host.storage; run history lives in the sidecar.
 import { defaultSettings, plain, rpc } from "./api.js";
+import { localizeError, makeI18n } from "./i18n.js";
 
 export const app = $state({
   ready: false,
@@ -19,7 +20,7 @@ export const app = $state({
 });
 
 export function showError(error) {
-  app.error = error?.message ? error.message : String(error);
+  app.error = localizeError(makeI18n(app.locale), error);
 }
 
 // The real DBX host advertises capabilities; the dev host injects the APIs

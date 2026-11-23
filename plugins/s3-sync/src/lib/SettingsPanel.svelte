@@ -3,7 +3,7 @@
   import { makeI18n } from "./i18n.js";
 
   let { onback } = $props();
-  const t = makeI18n(app.locale);
+  const t = $derived(makeI18n(app.locale));
 
   async function save() {
     try {

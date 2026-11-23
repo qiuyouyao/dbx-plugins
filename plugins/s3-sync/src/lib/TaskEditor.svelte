@@ -2,10 +2,10 @@
   import { untrack } from "svelte";
   import { app, showError, upsertTask, loadConnections } from "./state.svelte.js";
   import { rpc } from "./api.js";
-  import { makeI18n } from "./i18n.js";
+  import { localizeError, makeI18n } from "./i18n.js";
 
   let { task = null, ondone } = $props();
-  const t = makeI18n(app.locale);
+  const t = $derived(makeI18n(app.locale));
 
   // Form fields start from the task snapshot; later prop changes intentionally
   // do not reset what the user is typing.
@@ -73,8 +73,8 @@
       testResult[side] = { ok: true, text: t("testOk").replace("{count}", result.buckets.length) };
       loadBuckets(side, connectionId);
     } catch (error) {
-      const notOpen = error?.code === -32010 || /Open the saved S3 connection/i.test(error?.message ?? "");
-      testResult[side] = { ok: false, text: notOpen ? t("testNotOpen") : t("testFailed") + (error?.message ?? String(error)) };
+      const notOpen = error?.code === -32010 || /^Open the saved S3 connection/i.test(error?.message ?? "");
+      testResult[side] = { ok: false, text: notOpen ? t("testNotOpen") : t("testFailed") + localizeError(t, error) };
     } finally {
       testing[side] = false;
     }

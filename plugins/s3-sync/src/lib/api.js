@@ -24,10 +24,10 @@ export function formatBytes(bytes) {
   return `${scaled.toFixed(scaled >= 100 ? 0 : 1)} ${units[unit]}`;
 }
 
-export function formatTime(iso) {
+export function formatTime(iso, locale) {
   if (!iso) return "—";
   const date = new Date(iso);
-  return Number.isNaN(date.getTime()) ? iso : date.toLocaleString();
+  return Number.isNaN(date.getTime()) ? iso : date.toLocaleString(locale || undefined);
 }
 
 export function taskSummary(task) {
