@@ -3,7 +3,7 @@
   "manifest_version": 1,
   "id": "io.github.qiuyouyao.s3-sync",
   "name": "S3 Sync",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "publisher": "qiuyouyao",
   "description": "Migrate and incrementally sync objects between S3-compatible storage services (MinIO, RustFS, AWS S3).",
   "icon": "assets/plugin.svg",

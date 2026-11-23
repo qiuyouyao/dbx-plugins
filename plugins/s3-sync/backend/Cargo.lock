@@ -306,7 +306,7 @@ dependencies = [
 
 [[package]]
 name = "dbx-plugin-s3-sync"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "aws-credential-types",
  "aws-sigv4",

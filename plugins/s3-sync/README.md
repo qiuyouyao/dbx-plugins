@@ -72,7 +72,7 @@ Release matching the tag.
 
 ## DBX Store submission
 
-1. Publish a source tag `v0.1.0` and a GitHub Release for it.
+1. Publish a source tag `v0.1.1` and a GitHub Release for it.
 2. Wait for `.github/workflows/plugin-release.yml` to upload all candidates.
 3. Download `release-candidates.json` from that Release, then generate the store candidate:
 

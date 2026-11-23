@@ -1,7 +1,7 @@
 {
   "name": "S3 Sync",
   "description": "Migrate and incrementally sync objects between S3-compatible storage services (MinIO, RustFS, AWS S3).",
-  "icon": "https://raw.githubusercontent.com/qiuyouyao/dbx-plugins/v0.1.0/plugins/s3-sync/assets/plugin.svg",
+  "icon": "https://raw.githubusercontent.com/qiuyouyao/dbx-plugins/v0.1.1/plugins/s3-sync/assets/plugin.svg",
   "tags": [
     "storage",
     "s3",
@@ -14,10 +14,10 @@
     "host.storage",
     "host.workbench"
   ],
-  "source": "https://github.com/qiuyouyao/dbx-plugins/tree/v0.1.0",
-  "homepage": "https://github.com/qiuyouyao/dbx-plugins/tree/v0.1.0/plugins/s3-sync",
+  "source": "https://github.com/qiuyouyao/dbx-plugins/tree/v0.1.1",
+  "homepage": "https://github.com/qiuyouyao/dbx-plugins/tree/v0.1.1/plugins/s3-sync",
   "license": "MIT",
-  "releaseNotes": "Initial release: S3-compatible connection provider, migration and incremental sync workbench, preview, retry and i18n.",
+  "releaseNotes": "Patch release: mask access_key in the connection form, disclose sidecar local writes, and localize runtime errors consistently.",
   "localizations": {
     "zh-CN": {
       "name": "S3 同步",
