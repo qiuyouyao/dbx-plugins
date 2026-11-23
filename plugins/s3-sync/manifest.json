@@ -57,7 +57,7 @@
         {
           "key": "access_key",
           "label": "Access key",
-          "type": "text",
+          "type": "password",
           "binding": "secret",
           "required": true
         },

@@ -10,6 +10,14 @@ and `docs/adr/`.
 - `src/` — Svelte 5 workbench UI, built by Vite into `ui/`.
 - `backend/` — Rust sidecar: S3 client (SigV4), diff planning, run engine, history.
 
+## Local storage
+
+The sidecar writes execution records but never credentials to disk. Run history
+is stored under `<data>/history/<run-id>.json`, and temporary download files
+under `<data>/tmp/<run-id>/<index>.part`, where `<data>` is `DBX_PLUGIN_DATA_DIR`
+(defaulting to `.s3-sync-data`). Both locations are cleaned up when a run
+finishes; a crash can leave stale `.part` files behind.
+
 ## Develop
 
 ```pwsh
