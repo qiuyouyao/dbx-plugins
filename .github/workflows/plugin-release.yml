@@ -8,7 +8,8 @@ permissions:
   contents: write
 
 jobs:
-  release:
+  release-s3-sync:
+    if: "!startsWith(github.event.release.tag_name, 'devtools-v')"
     uses: t8y2/dbx/.github/workflows/plugin-release-reusable.yml@plugin-cli-v0.1.10
     with:
       release-tag: ${{ github.event.release.tag_name }}
@@ -19,3 +20,17 @@ jobs:
       plugin-cli-version: 0.1.10
       go-version: ""
       rust-toolchain: stable
+
+  release-dev-tools:
+    if: startsWith(github.event.release.tag_name, 'devtools-v')
+    uses: t8y2/dbx/.github/workflows/plugin-release-reusable.yml@plugin-cli-v0.1.10
+    with:
+      release-tag: ${{ github.event.release.tag_name }}
+      working-directory: plugins/dev-tools
+      package-command: npm ci && npm run build && dbx-plugin package .
+      package-path: dist/*.dbxp
+      metadata-path: dist/*.artifact.json
+      plugin-cli-version: 0.1.10
+      go-version: ""
+      rust-toolchain: ""
+      build-matrix: '{"include":[{"runner":"ubuntu-24.04","target":"universal"}]}'

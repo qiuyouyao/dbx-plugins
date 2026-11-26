@@ -1,0 +1,24 @@
+{
+  "name": "Dev Tools",
+  "description": "Small offline developer utilities in one workbench: JSON formatting, password generation, and more.",
+  "icon": "https://raw.githubusercontent.com/qiuyouyao/dbx-plugins/devtools-v0.1.1/plugins/dev-tools/assets/plugin.svg",
+  "tags": [
+    "developer-tools",
+    "json",
+    "password",
+    "utilities"
+  ],
+  "permissions": [
+    "host.workbench"
+  ],
+  "source": "https://github.com/qiuyouyao/dbx-plugins/tree/devtools-v0.1.1",
+  "homepage": "https://github.com/qiuyouyao/dbx-plugins/tree/devtools-v0.1.1/plugins/dev-tools",
+  "license": "MIT",
+  "releaseNotes": "Icon refresh with a tool wordmark; password generator no longer selects symbols by default.",
+  "localizations": {
+    "zh-CN": {
+      "name": "开发工具箱",
+      "description": "离线小工具工作台：JSON 格式化、密码生成器，以及后续更多小功能。"
+    }
+  }
+}

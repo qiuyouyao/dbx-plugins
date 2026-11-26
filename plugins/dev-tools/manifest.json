@@ -1,0 +1,69 @@
+{
+  "$schema": "https://raw.githubusercontent.com/t8y2/dbx/main/plugins/manifest.schema.json",
+  "manifest_version": 1,
+  "id": "io.github.qiuyouyao.dev-tools",
+  "name": "Dev Tools",
+  "version": "0.1.1",
+  "publisher": "qiuyouyao",
+  "description": "Small offline developer utilities in one workbench: JSON formatting, password generation, and more.",
+  "icon": "assets/plugin.svg",
+  "permissions": ["host.workbench"],
+  "engines": { "dbx": ">=0.5.68", "host_api": "1" },
+  "entrypoints": { "ui": { "root": "ui", "entry": "ui/index.html" } },
+  "contributions": [
+    {
+      "type": "workbench",
+      "id": "io.github.qiuyouyao.dev-tools.workbench",
+      "label": "Dev Tools",
+      "description": "Offline JSON formatting, password generation and other small developer utilities.",
+      "icon": "assets/plugin.svg"
+    },
+    {
+      "type": "command",
+      "id": "io.github.qiuyouyao.dev-tools.open",
+      "label": "Open Dev Tools",
+      "description": "Open the Dev Tools workbench.",
+      "icon": "assets/plugin.svg",
+      "action": {
+        "type": "open-workbench",
+        "workbench": "io.github.qiuyouyao.dev-tools.workbench",
+        "presentation": "tab"
+      }
+    },
+    {
+      "type": "menus",
+      "id": "io.github.qiuyouyao.dev-tools.menus",
+      "items": [
+        {
+          "location": "appToolbar",
+          "command": "io.github.qiuyouyao.dev-tools.open",
+          "group": "primary",
+          "order": 20,
+          "default_visible": true
+        },
+        {
+          "location": "commandPalette",
+          "command": "io.github.qiuyouyao.dev-tools.open",
+          "group": "primary",
+          "order": 20
+        }
+      ]
+    }
+  ],
+  "localizations": {
+    "zh-CN": {
+      "name": "开发工具箱",
+      "description": "离线小工具工作台：JSON 格式化、密码生成器，以及后续更多小功能。",
+      "contributions": {
+        "io.github.qiuyouyao.dev-tools.workbench": {
+          "label": "开发工具箱",
+          "description": "离线 JSON 格式化、密码生成等开发者小工具。"
+        },
+        "io.github.qiuyouyao.dev-tools.open": {
+          "label": "打开开发工具箱",
+          "description": "打开开发工具箱工作台。"
+        }
+      }
+    }
+  }
+}
